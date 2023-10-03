@@ -1,0 +1,6 @@
+/target
+*.lammpstrj
+*.dat
+*.input
+*.gif
+.vscode
