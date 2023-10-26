@@ -1,11 +1,9 @@
-use std::io::Result;
-
 use rand::Rng;
 
 const R: f64 = 50.0;
 const Z0: f64 = 10.0;
 
-fn main() -> Result<()> {
+fn main() {
     let mut rng = rand::thread_rng();
     for _ in 0..10000 {
         let x = R * rng.gen_range(-1.0..=1.0);
@@ -16,5 +14,4 @@ fn main() -> Result<()> {
             println!("{} {} {}", x, y, z - Z0);
         }
     }
-    Ok(())
 }
