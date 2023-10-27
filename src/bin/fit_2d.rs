@@ -27,22 +27,12 @@ fn main() -> Result<()> {
     let mut min_v = f64::MAX;
 
     let mut rng = rand::thread_rng();
-    'outer: for i in 1..100000 {
-        // let alpha = 0.15;
-        // let step_size = 1.0 / (i as f64).powf(alpha);
-        let step_size = 0.01;
-        let diff = if rng.gen_bool(0.5) {
-            step_size
-        } else {
-            -step_size
-        };
-        let mut tmp_r = r;
-        let mut tmp_y0 = y0;
-        if i % 2 == 1 {
-            tmp_r += diff;
-        } else {
-            tmp_y0 += diff;
-        }
+    'outer: for i in 1..10000 {
+        let alpha = 0.15;
+        let step_size = 1.0 / (i as f64).powf(alpha);
+        let theta = 2.0 * PI * rng.gen::<f64>();
+        let tmp_r = r + step_size * theta.sin();
+        let tmp_y0 = y0 + step_size * theta.cos();
 
         for drop in &drops {
             let (x, y) = (drop[0], drop[1]);
