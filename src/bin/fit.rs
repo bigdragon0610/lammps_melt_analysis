@@ -25,6 +25,10 @@ fn main() -> Result<()> {
     let mut z0 = 0.0;
 
     let mut min_v = f64::MAX;
+    let mut ans = (1, r, z0, min_v);
+
+    let mut beta = 0.01;
+    let beta_increase_rate = 0.0001;
 
     let mut rng = rand::thread_rng();
     'outer: for i in 1..100000 {
@@ -43,10 +47,13 @@ fn main() -> Result<()> {
 
         let h = tmp_r - tmp_z0;
         let v = PI * h * (h * h + 3.0 * (tmp_r * tmp_r - tmp_z0 * tmp_z0)) / 6.0;
+        if v < ans.3 {
+            ans = (i, tmp_r, tmp_z0, v);
+        }
+
         if min_v <= v {
             let p: f64 = rng.gen();
             let de = v - min_v;
-            let beta = 0.01;
             if p > (-beta * de).exp() {
                 continue;
             }
@@ -56,7 +63,10 @@ fn main() -> Result<()> {
         z0 = tmp_z0;
         min_v = v;
         println!("{} {} {} {}", i, tmp_r, tmp_z0, min_v);
+        beta += beta_increase_rate;
     }
+
+    println!("# {:?}", ans);
 
     Ok(())
 }
