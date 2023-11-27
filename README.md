@@ -1,7 +1,7 @@
 # create dat
 ```
-cargo run --release --bin dat ./melt.lammpstrj 1000000 > ./dat/temp.dat
-cargo run --release --bin drop ./dat/temp.dat > ./dat/droplet.dat
+dat ./melt.lammpstrj 1000000 > ./dat/temp.dat
+drop ./dat/temp.dat 3.0 > ./dat/droplet.dat
 ```
 
 # gnuplot
@@ -12,7 +12,8 @@ sp "./dat/droplet.dat" pt 6
 
 # fit
 ```
-cargo run --release --bin fit ./dat/droplet.dat > ./dat/fit.dat
+fit ./dat/droplet.dat 100.0 0.0 > ./dat/fit.dat
+min_v ./dat/fit.dat > ./dat/min_v.dat
 ```
 
 # fitした結果を表示
@@ -21,8 +22,8 @@ set view equal xyz
 
 Xc = 0.0
 Yc = 0.0
-Zc = -2.719976311391644
-R = 9.901306433919977
+Zc = -0.054928819964232795
+R = 24.857257463632966
 
 set parametric
 set urange [0:2*pi]

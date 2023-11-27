@@ -9,6 +9,16 @@ use rand::Rng;
 
 fn main() -> Result<()> {
     let file_name = env::args().nth(1).expect("ファイル名を指定してください");
+    let mut r: f64 = env::args()
+        .nth(2)
+        .expect("r を指定してください (例: 100.0)")
+        .parse()
+        .unwrap();
+    let mut z0: f64 = env::args()
+        .nth(3)
+        .expect("z0 を指定してください (例: 0.0)")
+        .parse()
+        .unwrap();
     let f = File::open(file_name).expect("ファイルが開けませんでした");
     let reader = BufReader::new(f);
     let mut drops: Vec<Vec<f64>> = Vec::new();
@@ -21,11 +31,7 @@ fn main() -> Result<()> {
         drops.push(line);
     }
 
-    let mut r = 100.0;
-    let mut z0 = 0.0;
-
     let mut min_v = f64::MAX;
-    let mut ans = (1, r, z0, min_v);
 
     let mut beta = 0.01;
     let beta_increase_rate = 0.0001;
@@ -47,9 +53,6 @@ fn main() -> Result<()> {
 
         let h = tmp_r - tmp_z0;
         let v = PI * h * (h * h + 3.0 * (tmp_r * tmp_r - tmp_z0 * tmp_z0)) / 6.0;
-        if v < ans.3 {
-            ans = (i, tmp_r, tmp_z0, v);
-        }
 
         if min_v <= v {
             let p: f64 = rng.gen();
@@ -65,8 +68,6 @@ fn main() -> Result<()> {
         println!("{} {} {} {}", i, tmp_r, tmp_z0, min_v);
         beta += beta_increase_rate;
     }
-
-    println!("# {:?}", ans);
 
     Ok(())
 }

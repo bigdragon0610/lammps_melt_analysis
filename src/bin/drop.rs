@@ -5,10 +5,13 @@ use std::{
     io::{BufRead, BufReader, Result},
 };
 
-const CUTOFF: f64 = 3.0;
-
 fn main() -> Result<()> {
     let file_name = env::args().nth(1).expect("ファイル名を指定してください");
+    let cutoff: f64 = env::args()
+        .nth(2)
+        .expect("cutoff を指定してください (例: 3.0)")
+        .parse()
+        .unwrap();
     let f = File::open(file_name).expect("ファイルが開けませんでした");
     let mut list: Vec<Vec<f64>> = Vec::new();
     let reader = BufReader::new(f);
@@ -28,7 +31,7 @@ fn main() -> Result<()> {
             let dy = list[i][1] - list[j][1];
             let dz = list[i][2] - list[j][2];
             let r2 = dx * dx + dy * dy + dz * dz;
-            if r2 <= CUTOFF * CUTOFF {
+            if r2 <= cutoff * cutoff {
                 union(i, j, &mut cluster);
             }
         }
