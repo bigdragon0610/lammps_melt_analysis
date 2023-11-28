@@ -1,4 +1,5 @@
 /target
+/centos_target
 *.lammpstrj
 *.dat
 *.input
