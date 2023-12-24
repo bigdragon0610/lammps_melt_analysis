@@ -22,7 +22,7 @@ fn main() -> Result<()> {
         }
     }
 
-    println!("{}, {}, {}, {}", min.0, min.1, min.2, min.3);
+    println!("{} {} {} {}", min.0, min.1, min.2, min.3);
 
     Ok(())
 }
